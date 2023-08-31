@@ -29,52 +29,60 @@ class Tree {
   constructor(_arr, _beginIndex, _lastIndex) {
     this.root = buildTree(_arr, _beginIndex, _lastIndex);
   }
-
+  static findspot(data, _node, next) {
+    if (next === null || next.data === data) {
+      return;
+    }
+    if (data > next.data) {
+      if (next.rightNode === null) {
+        return (next.rightNode = _node);
+      }
+      this.findspot(data, _node, next.rightNode);
+    } else if (data < next.data) {
+      if (next.leftNode === null) {
+        return (next.leftNode = _node);
+      }
+      this.findspot(data, _node, next.leftNode);
+    }
+  }
+  static deleteSpot(data, _node, next) {
+    if (data === next.data && next.rightNode === null && next.leftNode === null) {
+      console.log("Here on true");
+      _node.rightNode = null;
+      _node.leftNode = null;
+      return;
+    } else {
+      if (data > next.data) {
+        _node = next;
+        this.deleteSpot(data, _node, next.rightNode);
+      } else if (data < next.data) {
+        _node = next;
+        this.deleteSpot(data, _node, next.leftNode);
+      }
+    }
+  }
   insert(data) {
     let node = new Node(data);
     let current = this.root;
-    findspot(data, node, current);
+    Tree.findspot(data, node, current);
   }
-  delete(data) {}
+  delete(data) {
+    let temp = null;
+    let current = this.root;
+    Tree.deleteSpot(data, temp, current);
+  }
 }
 
-// let count = 0;
 //! Build BST
 function buildTree(arr, beginIndex, lastIndex) {
-  //   if (count === 20) {
-  //     return;
-  //   }
-  //   console.log(`Begin Index: ${beginIndex}`);
-  //   console.log(`Last Index: ${lastIndex}`);
-
   if (beginIndex > lastIndex) {
     return null;
   } else {
     const mid = Number(Math.floor((beginIndex + lastIndex) / 2));
-    // const mid = (beginIndex + lastIndex) / 2;
-    // console.log(`Mid: ${mid}`);
     const node = new Node(arr[mid]);
-    // count++;
     node.leftNode = buildTree(arr, beginIndex, mid - 1);
     node.rightNode = buildTree(arr, mid + 1, lastIndex);
     return node;
-  }
-}
-
-function findspot(data, _node, next) {
-  if (next === null || next.data === data) {
-    return;
-  }
-  if (data > next.data) {
-    if (next.rightNode === null) {
-      return (next.rightNode = _node);
-    }
-    findspot(data, _node, next.rightNode);
-  } else if (data < next.data) {
-    if (next.leftNode === null) {
-      return (next.leftNode = _node);
-    }
-    findspot(data, _node, next.leftNode);
   }
 }
 
@@ -82,7 +90,8 @@ const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
 console.log(binaryTree);
 console.log(binaryTree.root);
 console.log("Insert: ");
-console.log(binaryTree.insert(2));
+console.log(binaryTree.insert(90));
+console.log(binaryTree.delete(7));
 
 //! Visualize the tree in the console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
