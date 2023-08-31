@@ -1,5 +1,3 @@
-// import mergeSortMain from "./mergeSort";
-export { sortedList, newList };
 import mergeSortMain from "./mergeSort.js";
 
 class Node {
@@ -27,7 +25,16 @@ console.log(fifth);
 //Index 0 -13
 let sortedList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let newList = [...mergeSortMain(sortedList)];
+let uniqueList = [];
+newList.forEach((num) => {
+  console.log(num);
+  if (!uniqueList.includes(num)) {
+    uniqueList.push(num);
+  }
+});
+
 console.log(newList);
+console.log(uniqueList);
 class Tree {
   constructor(arr) {
     this.arr = arr;

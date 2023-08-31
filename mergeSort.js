@@ -1,5 +1,3 @@
-import { sortedList, newList } from "./javascript.js";
-
 const mergeSortMain = (list) => {
   const beginIndex = 0;
   const endIndex = list.length - 1;
@@ -60,9 +58,7 @@ const mergeSortMain = (list) => {
     merge(array, startIndex, lastIndex, middleIndex);
     return array;
   }
-  // sortedList = mergeSort(list, beginIndex, endIndex);
-  // console.log(sortedList);
-  // return sortedList;
+
   return mergeSort(list, beginIndex, endIndex);
 };
 
