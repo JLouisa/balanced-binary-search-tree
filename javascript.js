@@ -1,5 +1,7 @@
 import mergeSortMain from "./mergeSort.js";
+export { uniqueList, newList };
 
+//! class Node
 class Node {
   constructor(data) {
     this.data = data;
@@ -7,39 +9,49 @@ class Node {
     this.rightNode = null;
   }
 }
-//?+++++++++++++++++++++++++++++
-const first = new Node(1);
-const second = new Node(2);
-const third = new Node(3);
-const fourth = new Node(4);
-const fifth = new Node(5);
-second.leftNode = first;
-second.rightNode = third;
-console.log(first);
-console.log(second);
-console.log(third);
-console.log(fourth);
-console.log(fifth);
-//?+++++++++++++++++++++++++++++
 
-//Index 0 -13
+//!List
+//Index 0 - 13
 let sortedList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let newList = [...mergeSortMain(sortedList)];
+
+// Index 0 - 10
+// Remove duplicates
 let uniqueList = [];
 newList.forEach((num) => {
-  console.log(num);
   if (!uniqueList.includes(num)) {
     uniqueList.push(num);
   }
 });
-
-console.log(newList);
-console.log(uniqueList);
 class Tree {
-  constructor(arr) {
-    this.arr = arr;
+  constructor(_arr, _beginIndex, _lastIndex) {
+    this.root = buildTree(_arr, _beginIndex, _lastIndex);
   }
-  root = buildTree();
 }
 
-function buildTree(arr) {}
+// let count = 0;
+
+function buildTree(arr, beginIndex, lastIndex) {
+  //   if (count === 20) {
+  //     return;
+  //   }
+  //   console.log(`Begin Index: ${beginIndex}`);
+  //   console.log(`Last Index: ${lastIndex}`);
+
+  if (beginIndex > lastIndex) {
+    return null;
+  } else {
+    const mid = Number(Math.floor((beginIndex + lastIndex) / 2));
+    // const mid = (beginIndex + lastIndex) / 2;
+    // console.log(`Mid: ${mid}`);
+    const node = new Node(arr[mid]);
+    // count++;
+    node.leftNode = buildTree(arr, beginIndex, mid - 1);
+    node.rightNode = buildTree(arr, mid + 1, lastIndex);
+    return node;
+  }
+}
+
+const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
+console.log(binaryTree);
+console.log(binaryTree.root);
