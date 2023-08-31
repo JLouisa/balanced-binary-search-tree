@@ -23,6 +23,8 @@ newList.forEach((num) => {
     uniqueList.push(num);
   }
 });
+
+console.log(uniqueList);
 class Tree {
   constructor(_arr, _beginIndex, _lastIndex) {
     this.root = buildTree(_arr, _beginIndex, _lastIndex);
@@ -30,7 +32,7 @@ class Tree {
 }
 
 // let count = 0;
-
+//! Build BST
 function buildTree(arr, beginIndex, lastIndex) {
   //   if (count === 20) {
   //     return;
@@ -55,3 +57,18 @@ function buildTree(arr, beginIndex, lastIndex) {
 const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
 console.log(binaryTree);
 console.log(binaryTree.root);
+
+//! Visualize the tree in the console
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.rightNode, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.leftNode, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+prettyPrint(binaryTree.root);
