@@ -1,3 +1,7 @@
+// import mergeSortMain from "./mergeSort";
+export { sortedList, newList };
+import mergeSortMain from "./mergeSort.js";
+
 class Node {
   constructor(data) {
     this.data = data;
@@ -20,10 +24,15 @@ console.log(fourth);
 console.log(fifth);
 //?+++++++++++++++++++++++++++++
 
+//Index 0 -13
+let sortedList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let newList = [...mergeSortMain(sortedList)];
+console.log(newList);
 class Tree {
   constructor(arr) {
     this.arr = arr;
-    // this.root = buildTree();
   }
   root = buildTree();
 }
+
+function buildTree(arr) {}
