@@ -19,3 +19,11 @@ console.log(third);
 console.log(fourth);
 console.log(fifth);
 //?+++++++++++++++++++++++++++++
+
+class Tree {
+  constructor(arr) {
+    this.arr = arr;
+    // this.root = buildTree();
+  }
+  root = buildTree();
+}
