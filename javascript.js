@@ -45,22 +45,7 @@ class Tree {
       this.findspot(data, _node, next.leftNode);
     }
   }
-  static deleteSpot(data, _node, next) {
-    if (data === next.data && next.rightNode === null && next.leftNode === null) {
-      console.log("Here on true");
-      _node.rightNode = null;
-      _node.leftNode = null;
-      return;
-    } else {
-      if (data > next.data) {
-        _node = next;
-        this.deleteSpot(data, _node, next.rightNode);
-      } else if (data < next.data) {
-        _node = next;
-        this.deleteSpot(data, _node, next.leftNode);
-      }
-    }
-  }
+
   insert(data) {
     let node = new Node(data);
     let current = this.root;
@@ -69,7 +54,7 @@ class Tree {
   delete(data) {
     let temp = null;
     let current = this.root;
-    Tree.deleteSpot(data, temp, current);
+    deleteSpot(data, temp, current);
   }
 }
 
@@ -91,7 +76,7 @@ console.log(binaryTree);
 console.log(binaryTree.root);
 console.log("Insert: ");
 console.log(binaryTree.insert(90));
-console.log(binaryTree.delete(7));
+console.log(binaryTree.delete());
 
 //! Visualize the tree in the console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -107,3 +92,52 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 prettyPrint(binaryTree.root);
+
+function deleteSpot(data, _node, next) {
+  if (next === null) {
+    return console.log("not found");
+  } else if (data === next.data && next.rightNode === null && next.leftNode === null) {
+    console.log("Here on true");
+    _node.rightNode = null;
+    _node.leftNode = null;
+    return;
+  } else if (data === next.data && next.data > _node.data && next.rightNode !== null) {
+    deleteInnerRight(_node, next);
+  } else if (data === next.data && next.data < _node.data && next.leftNode !== null) {
+    deleteInnerLeft(_node, next);
+  } else {
+    if (data > next.data) {
+      _node = next;
+      deleteSpot(data, _node, next.rightNode);
+    } else if (data < next.data) {
+      _node = next;
+      deleteSpot(data, _node, next.leftNode);
+    }
+  }
+}
+
+function deleteInnerRight(_node, next) {
+  _node.rightNode = next.leftNode;
+  if (next.rightNode !== null) {
+    let rightSpot = next.leftNode.rightNode;
+    while (rightSpot.rightNode !== null) {
+      rightSpot = rightSpot.rightNode;
+    }
+    console.log(next.rightNode);
+    console.log(rightSpot);
+    console.log(rightSpot.rightNode);
+    rightSpot.rightNode = next.rightNode;
+  }
+}
+
+function deleteInnerLeft(_node, next) {
+  console.log(`Head Node: ${_node.data}`);
+  _node.leftNode = next.leftNode;
+  if (next.rightNode !== null) {
+    let rightSpot = next.leftNode.rightNode;
+    while (rightSpot.rightNode !== null) {
+      rightSpot = rightSpot.rightNode;
+    }
+    rightSpot.rightNode = next.rightNode;
+  }
+}
