@@ -29,6 +29,13 @@ class Tree {
   constructor(_arr, _beginIndex, _lastIndex) {
     this.root = buildTree(_arr, _beginIndex, _lastIndex);
   }
+
+  insert(data) {
+    let node = new Node(data);
+    let current = this.root;
+    findspot(data, node, current);
+  }
+  delete(data) {}
 }
 
 // let count = 0;
@@ -54,9 +61,28 @@ function buildTree(arr, beginIndex, lastIndex) {
   }
 }
 
+function findspot(data, _node, next) {
+  if (next === null || next.data === data) {
+    return;
+  }
+  if (data > next.data) {
+    if (next.rightNode === null) {
+      return (next.rightNode = _node);
+    }
+    findspot(data, _node, next.rightNode);
+  } else if (data < next.data) {
+    if (next.leftNode === null) {
+      return (next.leftNode = _node);
+    }
+    findspot(data, _node, next.leftNode);
+  }
+}
+
 const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
 console.log(binaryTree);
 console.log(binaryTree.root);
+console.log("Insert: ");
+console.log(binaryTree.insert(2));
 
 //! Visualize the tree in the console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
