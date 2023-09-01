@@ -321,3 +321,12 @@ console.log(binaryTree.find(67));
 console.log(binaryTree.height(8));
 console.log(binaryTree.depth(8));
 console.log(binaryTree.isBalanced(8, 3));
+
+//! Create new Balanced tree
+function reBalance(newTree) {
+  let nwArray = binaryTree.inOrder();
+  newTree = new Tree(nwArray, 0, nwArray.length - 1);
+  return newTree;
+}
+
+prettyPrint(reBalance("theTree").root);
