@@ -13,6 +13,10 @@ class Node {
 //!List
 //Index 0 - 13
 let sortedList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+// let sortedList = [72, 18, 89, 47, 36, 63, 81, 5, 94, 12, 55, 30, 76, 60, 99, 22, 44, 7, 70, 3];
+// let sortedList = [
+//   257, 92, 421, 146, 368, 44, 482, 191, 329, 75, 203, 417, 89, 294, 56, 398, 127, 358, 14, 263, 33, 488, 68, 236, 109,
+// ];
 let newList = [...mergeSortMain(sortedList)];
 
 // Index 0 - 10
@@ -75,11 +79,11 @@ const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
 console.log(binaryTree);
 console.log(binaryTree.root);
 console.log("Insert: ");
-console.log(binaryTree.insert(90));
-console.log(binaryTree.insert(6));
-console.log(binaryTree.insert(10));
+// console.log(binaryTree.insert(90));
+// console.log(binaryTree.insert(6));
+// console.log(binaryTree.insert(10));
 // console.log(binaryTree.delete());
-// console.log(binaryTree.delete(67));
+// console.log(binaryTree.delete(4));
 
 //! Visualize the tree in the console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -142,7 +146,48 @@ function deleteOneChild(_node, next, child) {
 }
 
 // if (data === next.data && next.leftNode !== null && next.rightNode !== null)
-function deleteTwoChild(_node, _next, _childLeft, _childRight) {}
+function deleteTwoChild(_node, _target, _childLeft, _childRight) {
+  if (_target.data > _node.data) {
+    _node.rightNode = null;
+    _node.rightNode = _childRight;
+    _childRight.leftNode = _childLeft;
+    _target.leftNode = null;
+    _target.rightNode = null;
+    return;
+  } else if (_target.data < _node.data) {
+    nodeParent = _node.leftNode;
+    _node.leftNode = null;
+    _node.leftNode = _childRight;
+    _childRight.leftNode = _childLeft;
+    _target.leftNode = null;
+    _target.rightNode = null;
+    return;
+  } else {
+    let currentChildLeft = _childRight;
+    console.log("Right Child: ");
+    console.log(_childRight);
+    console.log(_childRight.leftNode);
+    console.log(_childRight.leftNode.leftNode);
+    if (_childRight.leftNode === null) {
+      nodeParent = _childRight;
+      console.log("here");
+    } else {
+      while (currentChildLeft.leftNode !== null) {
+        currentChildLeft = currentChildLeft.leftNode;
+      }
+      nodeParent = currentChildLeft;
+      currentChildLeft.leftNode = _childLeft;
+    }
+    // ^^Works^^
+    let currentChildRight = currentChildLeft;
+    while (currentChildRight.rightNode !== null) {
+      currentChildRight = currentChildRight.rightNode;
+    }
+    currentChildLeft.rightNode = _childRight;
+    _childRight.leftNode = null;
+    return;
+  }
+}
 
 //* Case 1: Delete leaf Nodes
 // No problem deleting node. Parent will reference to null
@@ -152,3 +197,8 @@ function deleteTwoChild(_node, _next, _childLeft, _childRight) {}
 
 //* Case 3: Delete Node with two child
 // Parent node needs to point to the most left grandchild node
+
+// //! Pseudo Code
+// previous --> target.rightNode.mostLeftNode
+// target.rightNode.mostLeftNode --> target.leftNode
+// target.rightNode --> target.rightNode.leftNode.mostRightNode
