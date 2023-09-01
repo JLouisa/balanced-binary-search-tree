@@ -160,6 +160,13 @@ class Tree {
     let count = 0;
     return Tree.getDepth(data, current, count);
   }
+  isBalanced(data, data2) {
+    if (this.height(data) - this.depth(data2) < 2) {
+      return "Balanced";
+    } else {
+      return "Unbalanced";
+    }
+  }
 }
 
 //! Build BST
@@ -313,3 +320,4 @@ console.log(binaryTree.preOrder());
 console.log(binaryTree.find(67));
 console.log(binaryTree.height(8));
 console.log(binaryTree.depth(8));
+console.log(binaryTree.isBalanced(8, 3));
