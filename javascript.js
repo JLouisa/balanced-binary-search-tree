@@ -10,8 +10,7 @@ class Node {
   }
 }
 
-//!List
-//Index 0 - 13
+//!Lists
 let sortedList = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 // let sortedList = [72, 18, 89, 47, 36, 63, 81, 5, 94, 12, 55, 30, 76, 60, 99, 22, 44, 7, 70, 3];
 // let sortedList = [
@@ -64,6 +63,7 @@ class Tree {
       return this.findTheValue(data, current);
     }
   }
+  static getLevelOrder() {}
 
   insert(data) {
     let node = new Node(data);
@@ -78,6 +78,13 @@ class Tree {
   find(data) {
     let current = this.root;
     return Tree.findTheValue(data, current);
+  }
+  levelOrder() {
+    let current = this.root;
+    let traversal = [];
+    let queueArrays = [];
+    enQueue(current, queueArrays, traversal);
+    return traversal;
   }
 }
 
@@ -95,15 +102,6 @@ function buildTree(arr, beginIndex, lastIndex) {
 }
 
 const binaryTree = new Tree(uniqueList, 0, uniqueList.length - 1);
-// console.log(binaryTree);
-// console.log(binaryTree.root);
-// console.log("Insert: ");
-// console.log(binaryTree.insert(90));
-// console.log(binaryTree.insert(6));
-// console.log(binaryTree.insert(10));
-// console.log(binaryTree.delete());
-// console.log(binaryTree.delete(4));
-// console.log(binaryTree.find(67));
 
 //! Visualize the tree in the console
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -209,16 +207,28 @@ function deleteTwoChild(_node, _target, _childLeft, _childRight) {
   }
 }
 
-//* Case 1: Delete leaf Nodes
-// No problem deleting node. Parent will reference to null
+function enQueue(item, arr, dPArr) {
+  dPArr.push(item.data);
+  if (item.leftNode === null) {
+    //Do nothing
+  } else {
+    arr.push(item.leftNode);
+  }
+  if (item.rightNode === null) {
+    //Do nothing
+  } else {
+    arr.push(item.rightNode);
+  }
+  console.log(arr);
+  deQueue(arr, dPArr);
+  return arr;
+}
 
-//* Case 2: Delete Node with one child
-// Parent node needs to point to grandchild node
+function deQueue(queueArray, displayArray) {
+  while (queueArray.length > 0) {
+    enQueue(queueArray.shift(), queueArray, displayArray);
+  }
+  return displayArray;
+}
 
-//* Case 3: Delete Node with two child
-// Parent node needs to point to the most left grandchild node
-
-// //! Pseudo Code
-// previous --> target.rightNode.mostLeftNode
-// target.rightNode.mostLeftNode --> target.leftNode
-// target.rightNode --> target.rightNode.leftNode.mostRightNode
+// console.log(binaryTree.levelOrder());
