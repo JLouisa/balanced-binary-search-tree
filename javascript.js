@@ -63,7 +63,36 @@ class Tree {
       return this.findTheValue(data, current);
     }
   }
-  static getLevelOrder() {}
+  static getInOrder(item, arr) {
+    if (item === null) {
+      return;
+    } else {
+      this.getInOrder(item.leftNode, arr);
+      arr.push(item.data);
+      this.getInOrder(item.rightNode, arr);
+      return arr;
+    }
+  }
+  static getPreOrder(item, arr) {
+    if (item === null) {
+      return;
+    } else {
+      arr.push(item.data);
+      this.getPreOrder(item.leftNode, arr);
+      this.getPreOrder(item.rightNode, arr);
+      return arr;
+    }
+  }
+  static getPostOrder(item, arr) {
+    if (item === null) {
+      return;
+    } else {
+      this.getPostOrder(item.leftNode, arr);
+      this.getPostOrder(item.rightNode, arr);
+      arr.push(item.data);
+      return arr;
+    }
+  }
 
   insert(data) {
     let node = new Node(data);
@@ -85,6 +114,21 @@ class Tree {
     let queueArrays = [];
     enQueue(current, queueArrays, traversal);
     return traversal;
+  }
+  inOrder() {
+    let current = this.root;
+    let traversal = [];
+    return Tree.getInOrder(current, traversal);
+  }
+  preOrder() {
+    let current = this.root;
+    let traversal = [];
+    return Tree.getPreOrder(current, traversal);
+  }
+  postOrder() {
+    let current = this.root;
+    let traversal = [];
+    return Tree.getPostOrder(current, traversal);
   }
 }
 
@@ -232,3 +276,7 @@ function deQueue(queueArray, displayArray) {
 }
 
 // console.log(binaryTree.levelOrder());
+
+console.log(binaryTree.inOrder());
+console.log(binaryTree.postOrder());
+console.log(binaryTree.preOrder());
