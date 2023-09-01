@@ -99,6 +99,22 @@ class Tree {
     }
     return Math.max(this.getHeight(item.leftNode), this.getHeight(item.rightNode)) + 1;
   }
+  static getDepth(data, item, plus) {
+    if (item === null) {
+      return null;
+    }
+    if (item.data === data) {
+      return plus++;
+    } else if (item.data > data) {
+      item = item.leftNode;
+      plus++;
+      return this.getDepth(data, item, plus);
+    } else {
+      item = item.rightNode;
+      plus++;
+      return this.getDepth(data, item, plus);
+    }
+  }
   insert(data) {
     let node = new Node(data);
     let current = this.root;
@@ -138,6 +154,11 @@ class Tree {
   height(data) {
     let current = this.root;
     return Tree.getHeight(Tree.findTheValue(data, current));
+  }
+  depth(data) {
+    let current = this.root;
+    let count = 0;
+    return Tree.getDepth(data, current, count);
   }
 }
 
@@ -291,3 +312,4 @@ console.log(binaryTree.postOrder());
 console.log(binaryTree.preOrder());
 console.log(binaryTree.find(67));
 console.log(binaryTree.height(8));
+console.log(binaryTree.depth(8));
