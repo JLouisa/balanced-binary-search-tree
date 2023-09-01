@@ -93,7 +93,12 @@ class Tree {
       return arr;
     }
   }
-
+  static getHeight(item) {
+    if (item === null) {
+      return -1;
+    }
+    return Math.max(this.getHeight(item.leftNode), this.getHeight(item.rightNode)) + 1;
+  }
   insert(data) {
     let node = new Node(data);
     let current = this.root;
@@ -129,6 +134,10 @@ class Tree {
     let current = this.root;
     let traversal = [];
     return Tree.getPostOrder(current, traversal);
+  }
+  height(data) {
+    let current = this.root;
+    return Tree.getHeight(Tree.findTheValue(data, current));
   }
 }
 
@@ -280,3 +289,5 @@ function deQueue(queueArray, displayArray) {
 console.log(binaryTree.inOrder());
 console.log(binaryTree.postOrder());
 console.log(binaryTree.preOrder());
+console.log(binaryTree.find(67));
+console.log(binaryTree.height(8));
